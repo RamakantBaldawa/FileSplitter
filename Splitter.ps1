@@ -1,7 +1,8 @@
 param(
 [Parameter(Mandatory)]$filepath,
 [int]$l = 1000,
-[boolean]$header = $true
+[boolean]$header = $true,
+[boolean]$deleteOriginal = $false
 
 )
 
@@ -11,6 +12,7 @@ param(
  $filename = (Get-ChildItem $filepath).Name;
  $extension = (Get-ChildItem $filepath).Extension; 
  
+
  
  #split file by number of lines
  
@@ -34,5 +36,11 @@ else {
  
 $lowerbound=$upperbound;
 $upperbound=$upperbound+$l;
-
+    Write-Progress -Activity "File creation in Progress" -Status "$i Complete:";
  }
+
+#delete the file original file if required
+if($deleteOriginal)
+{
+  Remove-Item $filepath;
+}
